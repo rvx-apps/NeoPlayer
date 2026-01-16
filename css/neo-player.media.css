@@ -1,20 +1,19 @@
 @media (max-width: 480px) {
   /* Most Android phones */
   .neo-player .seek{
-      display: none;
-      
+      display: none;      
   }
   .controls{
       gap:5px;
   }
   .time{
-      font-size: 12px;
+      font-size: 15px;
   }
    .smallplaybtnicon{
-      font-size: 12px;
+      font-size: 15px;
   }
   .fullscreenbtnicon{
-      font-size: 12px;
+      font-size: 15px;
   }
 }
 
@@ -27,23 +26,23 @@
       gap:5px;
   }
    .time{
-      font-size: 12px;
+      font-size: 15px;
   }
  .smallplaybtnicon{
-      font-size: 12px;
+      font-size: 15px;
   }
   .fullscreenbtnicon{
-      font-size: 12px;
+      font-size: 15px;
   }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
   /* Phones in landscape mode */
    .smallplaybtnicon{
-      font-size: 12px;
+      font-size: 15px;
   }
   .fullscreenbtnicon{
-      font-size: 24px;
+      font-size: 15px;
   }
   .bottom-sheet{
       position: absolute;
