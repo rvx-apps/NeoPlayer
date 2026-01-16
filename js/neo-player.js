@@ -613,12 +613,13 @@ async function loadPlayerDeps({ css = [], js = [] }) {
 
 loadPlayerDeps({
    css: [
-         "player.css",
-         "controls.css"
+         "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.css",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.css"
       ],
    js: [
-         "subtitle-engine.js",
-         "player-controls.js"
+         "https://cdn.jsdelivr.net/npm/sweetalert2@11",
+         "https://cdn.jsdelivr.net/npm/hls.js@latest"
       ]
 }).then(() => {
    console.log("Player dependencies ready");
