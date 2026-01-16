@@ -614,8 +614,8 @@ async function loadPlayerDeps({ css = [], js = [] }) {
 loadPlayerDeps({
    css: [
          "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded",
-         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.css",
-         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.css"
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.2.css",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.1.css"
       ],
    js: [
          "https://cdn.jsdelivr.net/npm/sweetalert2@11",
