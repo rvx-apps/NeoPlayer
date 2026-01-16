@@ -238,14 +238,8 @@
   'opsz' 18
 }
 .material-symbols-rounded{
-    font-size: 18px;
+  font-size:18px;
 }
-.material-symbols-rounded .smallplaybtnicon{
-      font-size: 12px;
-  }
-.material-symbols-rounded  .fullscreenbtnicon{
-      font-size: 12px;
-  }
   
 .g-loader-ct{
   position:relative;
