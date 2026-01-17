@@ -78,9 +78,11 @@ class NeoPlayer {
       cancelButtonText: "Restart"
     }).then(async res => {
       if (res.isConfirmed) {
-        this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
         this.video.currentTime = this.state.time;
-        await this.loadSub(this.state.subfile);    
+        if(this.state.sub.on){
+          this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
+          await this.loadSub(this.state.subfile);    
+         }
         this.video.onload = () => this.video.play();
       }
     });
