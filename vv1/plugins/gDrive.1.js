@@ -58,27 +58,38 @@ export async function getDriveSource(fileId) {
 
     if (params.get("status") !== "ok") return [];
 
+    // ✅ extract best thumbnail
+    const thumb =
+      params.get("iurlmaxres") ||
+      params.get("iurlhq") ||
+      params.get("iurl") ||
+      params.get("thumbnail_url") ||
+      null;
+
     const streamMap =
       params.get("fmt_stream_map") ||
       params.get("url_encoded_fmt_stream_map");
 
-    if (!streamMap) return [];
+    if (!streamMap) return {};
 
     const streams = streamMap.split(",").map(entry => {
       const [itag, rawUrl] = entry.split("|");
       const src = decodeURIComponent(rawUrl);
 
-      return {
+      const sourceObj = {
         label: itagMap[itag] || `itag-${itag}`,
         quality: itagMap[itag] || `itag-${itag}`,
         src,
         type: detectVideoType(src, itag)
       };
+
+      // ✅ return as [thumbUrl, sourceObj]
+      return {thumb:thumb, source:sourceObj};
     });
 
     return streams;
   } catch (err) {
     console.error("Drive source error:", err);
-    return [];
+    return {};
   }
 }
