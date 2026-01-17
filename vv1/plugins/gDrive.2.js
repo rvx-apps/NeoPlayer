@@ -86,8 +86,7 @@ export async function getDriveSource(fileId) {
       // ✅ return as [thumbUrl, sourceObj]
       return sourceObj;
     });
-    streams.thumb = thumb;
-    return streams;
+    return {thumb:thumb,source:streams};
   } catch (err) {
     console.error("Drive source error:", err);
     return {};
