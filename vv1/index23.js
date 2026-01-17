@@ -510,7 +510,7 @@ Thanks!`
       this.video.paused ? this.video.play() : this.video.pause();
     
     this.video.ontimeupdate = () => {
-      this.save();
+      if(this.video.currentTime > 30) this.save();
       this.seek.value = (this.video.currentTime / this.video.duration) * 100;
       this.time.textContent =
         this.secFormat(this.video.currentTime) + " / " +
@@ -539,15 +539,16 @@ Thanks!`
       this.statLayer.querySelector(".timeShow").textContent = this.getTime12();
       var remainT = Math.floor((this.video.duration - this.video.currentTime));
       this.statLayer.querySelector(".remainTime").textContent = `${this.secFormat(remainT)}`;
-      if ("getBattery" in navigator) {
+      const btl = this.statLayer.querySelector(".batterylevel .icon");  
+      const btlv = this.statLayer.querySelector(".batterylevel .value");
+       if ("getBattery" in navigator) {
           navigator.getBattery().then(b => {
             //console.log(b.level * 100 + "%");
-            this.statLayer.querySelector(".batterylevel .value").textContent = b.level*100;
+            btlv.textContent = b.level*100;
             var vl = Math.floor(b.level *100);
             var vk = `battery_android_frame_${Math.floor(vl / 16.66)}`;
             if(vl == 100) vk = "battery_android_frame_full";
-            if(vl == 0) vk = "battery_android_alert"
-            var btl = this.statLayer.querySelector(".batterylevel .icon");
+            if(vl <= 15) vk = "battery_android_alert"
             btl.textContent=`${vk}`;
             if(vl <= 15) btl.style.color = "#ff0a00";
             if(40 >= vl > 15) btl.style = "#ff9315";
@@ -557,6 +558,9 @@ Thanks!`
           });
         } else {
           console.log("Battery API not supported");  
+          btl.textContent = "battery_android_frame_question";
+          btl.color="white";
+          btlv.textContent = "ERR";
         }
       
      
