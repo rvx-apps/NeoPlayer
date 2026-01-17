@@ -10,7 +10,7 @@ import {parseSRT,parseVTT,parseSub} from "https://cdn.jsdelivr.net/gh/rvx-apps/N
 import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
 import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
 import { loadState, saveState } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/storage.js";
-import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/gDrive.js";
+import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/gDrive.1.js";
 
 class NeoPlayer {
   constructor(container) {
@@ -64,12 +64,15 @@ class NeoPlayer {
    });
   }
   async loaddrivefile(id){
-     this.sources = await getDriveSource(id);
+     this.gdEx = await getDriveSource(id);
+     this.sources = gdEx.source;
+     this.poster = this.gdEx.thumb || null;
      this.setupQs();
   }
    
   setupQs(){
    this.quality.innerHTML ="";
+   this.posterLayer.querySelector("img").src = this.poster;     
    this.sources.forEach((s,i)=>{
       let o=document.createElement("option");
       o.value=i;o.text=s.label;
