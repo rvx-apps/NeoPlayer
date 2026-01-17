@@ -65,7 +65,7 @@ class NeoPlayer {
   }
   async loaddrivefile(id){
      this.gdEx = await getDriveSource(id);
-     this.sources = gdEx.source;
+     this.sources = this.gdEx.source;
      this.poster = this.gdEx.thumb || null;
      this.loadSource(this.sources[0]);
      this.setupQs();
