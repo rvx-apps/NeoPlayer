@@ -1,3 +1,5 @@
+import {toSeconds} from "https://github.com/rvx-apps/NeoPlayer/blob/main/vv1/utils/timeformat.js";
+
 /* -------------------- SRT / VTT -------------------- */
 function parseSRT(data) {
   return data.trim().split(/\n\n+/).map(b => {
