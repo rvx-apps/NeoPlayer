@@ -1,4 +1,4 @@
-import {toSeconds} from "https://github.com/rvx-apps/NeoPlayer/blob/main/vv1/utils/timeformat.js";
+import {toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
 
 /* -------------------- SRT / VTT -------------------- */
 function parseSRT(data) {
