@@ -42,13 +42,28 @@ class NeoPlayer {
         x.end = timeStringToMs(x.end)/1000;
         return x;
     });
-    this.saveDT();
-    //console.log(JSON.stringify(this.skipranges));
-    this.buildUI();
-    this.loadSource(this.sources[0]);
-    this.bindEvents();
-    this.bindVideoLoadingEvents();
-    this.toggleControls(1);
+    loadPlayerDeps({
+      css: [
+         "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.2.css",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.1.css"
+      ],
+      js: [
+         "https://cdn.jsdelivr.net/npm/sweetalert2@11",
+         "https://cdn.jsdelivr.net/npm/hls.js@latest"
+      ]
+   }).then(() => {
+      console.log("Player dependencies ready");
+      //initVideoPlayer(); // your init function
+
+      this.saveDT();
+      //console.log(JSON.stringify(this.skipranges));
+      this.buildUI();
+      this.loadSource(this.sources[0]);
+      this.bindEvents();
+      this.bindVideoLoadingEvents();
+      this.toggleControls(1);
+   });
   }
   
   saveDT(){
@@ -610,21 +625,6 @@ async function loadPlayerDeps({ css = [], js = [] }) {
   for (const c of css) await loadCSS(c);
   for (const j of js) await loadJS(j);
 }
-
-loadPlayerDeps({
-   css: [
-         "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded",
-         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.2.css",
-         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.1.css"
-      ],
-   js: [
-         "https://cdn.jsdelivr.net/npm/sweetalert2@11",
-         "https://cdn.jsdelivr.net/npm/hls.js@latest"
-      ]
-}).then(() => {
-   console.log("Player dependencies ready");
-   //initVideoPlayer(); // your init function
-});
          
 document.querySelectorAll(".neo-player")
   .forEach(p=>{
