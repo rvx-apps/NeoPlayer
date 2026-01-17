@@ -67,7 +67,7 @@ class NeoPlayer {
 
     Swal.fire({
       title: "Resume playback?",
-      text: `Continue from ${secFormat(this.state.time)} ?`,
+      text: `Continue from ${this.secFormat(this.state.time)} ?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Resume",
