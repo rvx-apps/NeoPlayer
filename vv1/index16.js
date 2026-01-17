@@ -75,7 +75,7 @@ class NeoPlayer {
     }).then(async res => {
       if (res.isConfirmed) {
         this.sub_settings = this.state.sub;
-        this.subselect.selectedIndex = this.state.sub.selected;
+        this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
         this.video.currentTime = this.state.time;
         await this.loadSub(this.state.subfile);
         this.state.fillmode ? this.video.classList.add("fill") : this.video.classList.remove("fill");
