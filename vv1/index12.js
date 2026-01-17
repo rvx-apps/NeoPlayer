@@ -305,7 +305,7 @@ Thanks!`
     
     this.speedItems.forEach((el,i)=>{
         el.onclick =()=> this.video.playbackRate = Number(el.textContent);
-        console.log(this.video.playbackRate);
+        //console.log(this.video.playbackRate);
     });
     
     this.sources.forEach((s,i)=>{
