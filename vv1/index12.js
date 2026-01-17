@@ -23,8 +23,9 @@ class NeoPlayer {
     this.poster = container.dataset.poster || null;
     this.subtitles = JSON.parse(container.dataset.subtitles || "[]");
     this.subs = [];
+    this.fillmode = false;
     this.sub_settings =  {
-        on:true,
+        on:false,
         size:"18px",
         color:"#ffffff",
         selected:0
@@ -73,9 +74,11 @@ class NeoPlayer {
       cancelButtonText: "Restart"
     }).then(async res => {
       if (res.isConfirmed) {
+        this.subselect.value = this.state.sub.selected;
         this.video.currentTime = this.state.time;
-        await this.loadSub(this.subtitles[this.state.sub_settings.selected].src);
-        this.renderSubs()
+        await this.loadSub(this.subtitles[this.state.sub.selected].src);
+        this.renderSubs();
+        this.state.fillmode ? this.video.classList.add("fill") : this.video.classList.remove("fill");
       }
     });
   }
@@ -86,7 +89,8 @@ class NeoPlayer {
       time: this.video.currentTime,
       src: this.video.src,
       sub:this.sub_settings,
-      subfile:this.subs
+      subfile:this.subfile,
+      fillmode:this.fillmode
     });
    }
    
@@ -270,7 +274,9 @@ Thanks!`
       });
     };
     
-    this.fillBtn.onclick = ()=> this.toggleVideoFill();
+    this.fillBtn.onclick = ()=> {
+       this.toggleVideoFill();
+    };
     
     this.statbtn.onclick = (e) => {
         var el = e.target.querySelector(".sw");
@@ -279,6 +285,7 @@ Thanks!`
     this.subColor.oninput = (e) => {
         var v = e.target.value;
         this.subtext.style.color = v;
+        this.sub_settings.color= v;
     }
     
     this.resetSubS.onclick = () => {
@@ -287,12 +294,13 @@ Thanks!`
         this.subSizeRange.value = this.sub_settings.size;
         this.subSizeShow.textContent = this.sub_settings.size;
         this.subColor.value = this.sub_settings.color;
+        this.sub_settings ={on:false,color:"#ffffff",size:"18px"};
     }
     this.subSizeRange.oninput = (e) => {
         var v = e.target.value;
         this.subtext.style.fontSize = `${v}px`;
         this.subSizeShow.textContent = `${v}px`;
-        
+        this.sub_settings.size= `${v}px`;
     }
     
     this.speedItems.forEach((el,i)=>{
@@ -322,9 +330,8 @@ Thanks!`
         }
         //console.log(v);
         this.sub_settings.on = true;
-        var sub = this.subtitles[v];  
-        this.sub_settings.subtitles = this.subtitles;
-        this.sub_settings.selected = v;
+        var sub = this.subtitles[v];
+        this.sub_settings.selected = sub;
         await this.loadSub(sub.src);
         console.log(sub.src);
     }
@@ -354,10 +361,12 @@ Thanks!`
   }
   
   async loadSub(url) {
+      this.subfile=url;
       const txt = await fetch(url).then(r => r.text());
       //console.log(txt);
       if (url.endsWith(".srt")) this.subs = parseSub(txt);
       if (url.endsWith(".vtt")) this.subs = parseSub(txt);
+      this.save();
       //console.log(JSON.stringify(this.subs));
   }
   
@@ -379,6 +388,7 @@ Thanks!`
   
   toggleVideoFill(){
       this.video.classList.toggle("fill");
+      this.fillmode = this.video.classList.contains("fill") ? true:false;
   }
   
   playOrPause() {
