@@ -9,40 +9,28 @@ import {showLoader, hideLoader} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPl
 import {parseSRT,parseVTT,parseSub} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/subtitles2.js";
 import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
 import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
+import { loadState, saveState } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/storage.js";
 
 class NeoPlayer {
   constructor(container) {
     this.version = "1.0";
-    this.playerST = JSON.parse(localStorage.getItem("RvX-Neo-Player-Config") || "{}");
     this.container = container;
     this.video = document.createElement("video");
     this.container.appendChild(this.video);
     this.sources = JSON.parse(container.dataset.sources || "[]");
+    this.id = container.dataset.id || location.pathname;
     this.old = false;
-    if(this.sources == this.playerST?.source?.sources){
-        //this.old = true;
-    }
-    this.poster = this.old ? playerST.source.poster : container.dataset.poster;
-    this.subtitles = this.old ? playerST.source.subtitles : JSON.parse(container.dataset.subtitles || "[]");
+    this.poster = container.dataset.poster || null;
+    this.subtitles = JSON.parse(container.dataset.subtitles || "[]");
     this.subs = [];
-    this.sub_settings = this.old ? playerST.sub_settings : {
+    this.sub_settings =  {
         on:true,
         size:"18px",
-        color:"#ffffff"
+        color:"#ffffff",
+        selected:0
     };
-    this.video.currentTime = this.old ? playerST.currentTime : 0;
-    if(!this.playerST || this.playerST == {}) {
-        this.playerST = {
-            currentTime:this.video.currentTime,
-            source:{
-                sources:this.sources,
-                poster:this.video.poster,
-                subtitle:this.subtitles
-            }
-        };
-        console.log(JSON.stringify(this.playerST));
-        this.saveDT()    
-    }
+    this.state = loadState(this.id) || {};
+    this.video.currentTime = 0;
     this.loader = null;
     this.skipranges = JSON.parse(container.dataset.skipranges || "[]").map(x=>{
         x.start = timeStringToMs(x.start) / 1000;
@@ -62,21 +50,46 @@ class NeoPlayer {
    }).then(() => {
       console.log("Player dependencies ready");
       //initVideoPlayer(); // your init function
-
-      this.saveDT();
       //console.log(JSON.stringify(this.skipranges));
       this.buildUI();
       this.loadSource(this.sources[0]);
       this.bindEvents();
       this.bindVideoLoadingEvents();
       this.toggleControls(1);
+      this.askResume();
    });
   }
-  
-  saveDT(){
-      localStorage.setItem('RvX-Neo-Player-Config', JSON.stringify(this.playerST));
+
+     /* ---------- Resume ---------- */
+  askResume() {
+    if (!this.state.time) return;
+
+    Swal.fire({
+      title: "Resume playback?",
+      text: `Continue from ${secFormat(this.state.time)} ?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Resume",
+      cancelButtonText: "Restart"
+    }).then(async res => {
+      if (res.isConfirmed) {
+        this.video.currentTime = this.state.time;
+        await this.loadSub(this.subtitles[this.state.sub_settings.selected].src);
+        this.renderSubs()
+      }
+    });
   }
 
+  /* ---------- Core ---------- */
+  save() {
+    saveState(this.id, {
+      time: this.video.currentTime,
+      src: this.video.src,
+      sub:this.sub_settings,
+      subfile:this.subs
+    });
+   }
+   
   buildUI() {
     this.statLayer = document.createElement("div");
     this.statLayer.className = "statLayer";
@@ -304,16 +317,25 @@ Thanks!`
         if (v == "") {
             this.subs = [];
             this.sub_settings.on = false;
+            this.sub_settings.selected = null;
             return;
         }
         //console.log(v);
         this.sub_settings.on = true;
-        var sub = this.subtitles[v];
+        var sub = this.subtitles[v];  
+        this.sub_settings.subtitles = this.subtitles;
+        this.sub_settings.selected = v;
         await this.loadSub(sub.src);
         console.log(sub.src);
     }
   }
-  
+  renderSubs (){
+     this.subtitles.forEach((s,i)=>{
+      let o=document.createElement("option");
+      o.value=i;o.text=s.label;
+      this.subselect.appendChild(o);
+    });
+  }
   toggleST(){
       console.log(this.statLayer.classList.contains("show"));
       if(this.statLayer.classList.contains("show")){
@@ -465,7 +487,7 @@ Thanks!`
       this.video.paused ? this.video.play() : this.video.pause();
     
     this.video.ontimeupdate = () => {
-      this.saveDT();
+      this.save();
       this.seek.value = (this.video.currentTime / this.video.duration) * 100;
       this.time.textContent =
         this.secFormat(this.video.currentTime) + " / " +
