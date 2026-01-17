@@ -24,6 +24,7 @@ class NeoPlayer {
     this.subtitles = JSON.parse(container.dataset.subtitles || "[]");
     this.subs = [];
     this.fillmode = false;
+    this.subTP = false;
     this.sub_settings =  {
         on:false,
         size:"18px",
@@ -95,7 +96,8 @@ class NeoPlayer {
       src: this.video.src,
       sub:this.sub_settings,
       subfile:this.subfile,
-      fillmode:this.fillmode
+      fillmode:this.fillmode,
+      textSub:this.subTP
     });
    }
    
@@ -373,9 +375,15 @@ Thanks!`
     this.video.load();
   }
   
-  async loadSub(url) {
+  async loadSub(url,txt = false) {
       if(!url) return;
+      if(txt){
+       this.subs = parseSub(url);
+       this.sub_settings.on = true;
+       return;
+      }
       this.subfile=url;
+      this.subTP = txt;
       const txt = await fetch(url).then(r => r.text());
       //console.log(txt);
       if (url.endsWith(".srt")) this.subs = parseSub(txt);
