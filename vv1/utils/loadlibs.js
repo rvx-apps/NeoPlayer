@@ -30,3 +30,4 @@ async function loadPlayerDeps({ css = [], js = [] }) {
   for (const c of css) await loadCSS(c);
   for (const j of js) await loadJS(j);
 }
+export {loadPlayerDeps};
