@@ -10,6 +10,7 @@ import {parseSRT,parseVTT,parseSub} from "https://cdn.jsdelivr.net/gh/rvx-apps/N
 import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
 import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
 import { loadState, saveState } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/storage.js";
+import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/gDrive.js";
 
 class NeoPlayer {
   constructor(container) {
@@ -62,6 +63,20 @@ class NeoPlayer {
       this.askResume();
    });
   }
+  async loaddrivefile(id){
+     this.sources = await getDriveSource(id);
+     this.setupQs();
+  }
+   
+  setupQs(){
+   this.quality.innerHTML ="";
+   this.sources.forEach((s,i)=>{
+      let o=document.createElement("option");
+      o.value=i;o.text=s.label;
+      this.quality.appendChild(o);
+    });
+  }
+   
   bindOldSetup(){
      if (this.state.sub) { this.sub_settings = this.state.sub;this.setupSub();}
      if (this.state.fillmode) this.video.classList.toggle("fill",this.state.fillmode);
@@ -314,12 +329,8 @@ Thanks!`
         el.onclick =()=> this.video.playbackRate = Number(el.textContent);
         //console.log(this.video.playbackRate);
     });
-    
-    this.sources.forEach((s,i)=>{
-      let o=document.createElement("option");
-      o.value=i;o.text=s.label;
-      this.quality.appendChild(o);
-    });
+
+    this.setupQs();
 
     this.subtitles.forEach((s,i)=>{
       let o=document.createElement("option");
