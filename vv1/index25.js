@@ -374,6 +374,7 @@ Thanks!`
   }
   
   async loadSub(url) {
+      if(!url) return;
       this.subfile=url;
       const txt = await fetch(url).then(r => r.text());
       //console.log(txt);
