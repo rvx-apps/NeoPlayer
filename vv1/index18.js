@@ -79,6 +79,7 @@ class NeoPlayer {
         this.video.currentTime = this.state.time;
         await this.loadSub(this.state.subfile);
         this.video.classList.toggle("fill", this.state.fillmode);      
+        this.video.onload = () => this.video.play();
       }
     });
   }
