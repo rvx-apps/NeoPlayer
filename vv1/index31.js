@@ -65,10 +65,14 @@ class NeoPlayer {
   }
   async loaddrivefile(id){
      this.gdEx = await getDriveSource(id);
-     this.sources = this.gdEx.source;
-     this.poster = this.gdEx.thumb || null;
-     this.loadSource(this.sources[0]);
-     this.setupQs();
+     if(this.gdEx){
+        this.sources = this.gdEx.source;
+        this.poster = this.gdEx.thumb || null;
+        this.loadSource(this.sources[0]);
+        this.setupQs();
+     }else{
+        console.log("fetchErr");
+     }
   }
    
   setupQs(){
