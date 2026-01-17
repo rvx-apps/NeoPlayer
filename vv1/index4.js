@@ -17,7 +17,6 @@ class NeoPlayer {
     this.video = document.createElement("video");
     this.container.appendChild(this.video);
     this.sources = JSON.parse(container.dataset.sources || "[]");
-    this.menu_s = new MenuController(this.container);
     this.old = false;
     if(this.sources == this.playerST?.source?.sources){
         //this.old = true;
@@ -235,7 +234,8 @@ class NeoPlayer {
     this.replay10Btn = this.maincontrols.querySelector(".replay10btn");
     this.forward10Btn = this.maincontrols.querySelector(".forward10btn");
     this.feedbackBtn = this.optionsM.querySelector(".feedback");
-    
+    this.menu_s = new MenuController(this.container);
+     
     this.feedbackBtn.onclick = () => {
           this.openFeedbackEmail({
             
