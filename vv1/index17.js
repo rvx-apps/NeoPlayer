@@ -78,7 +78,7 @@ class NeoPlayer {
         this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
         this.video.currentTime = this.state.time;
         await this.loadSub(this.state.subfile);
-        this.state.fillmode ? this.video.classList.add("fill") : this.video.classList.remove("fill");
+        this.video.classList.toggle("fill", this.state.fillmode);      
       }
     });
   }
@@ -388,7 +388,7 @@ Thanks!`
   
   toggleVideoFill(){
       this.video.classList.toggle("fill");
-      this.fillmode = this.video.classList.contains("fill") ? true:false;
+      this.fillmode = this.video.classList.contains("fill");
   }
   
   playOrPause() {
