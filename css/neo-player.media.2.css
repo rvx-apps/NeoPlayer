@@ -45,7 +45,6 @@
       font-size: 15px;
   }
   .bottom-sheet{
-      position: absolute;
       width: auto;
       height: 70%;
   }
@@ -55,7 +54,6 @@
 @media (min-width: 768px) and (max-width: 991px) {
   /* iPad mini, Galaxy Tab */
     .bottom-sheet{
-      position: absolute;
       width: auto;
       height: 70%;
   }
@@ -98,7 +96,9 @@
 }
 .neo-player:fullscreen .bottom-sheet{
   background:rgb(0,0,0,0.6);
+  position: absolute;
 }
 .neo-player:-webkit-full-screen .bottom-sheet{
   background:rgb(0,0,0,0.6);
+  position: absolute;
 }
