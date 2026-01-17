@@ -67,6 +67,7 @@ class NeoPlayer {
      this.gdEx = await getDriveSource(id);
      this.sources = gdEx.source;
      this.poster = this.gdEx.thumb || null;
+     this.loadSource(this.sources[0]);
      this.setupQs();
   }
    
@@ -386,6 +387,7 @@ Thanks!`
 
   loadSource(source) {
     this.video.src = source.src;
+    this.video.type = source.type;
     this.video.load();
   }
   
