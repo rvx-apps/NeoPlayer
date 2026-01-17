@@ -474,7 +474,7 @@ Thanks!`
           navigator.getBattery().then(b => {
             //console.log(b.level * 100 + "%");
             this.statLayer.querySelector(".batterylevel .value").textContent = b.level*100;
-            var vl = b.level *100;
+            var vl = Math.floor(b.level *100);
             var vk = `battery_android_frame_${Math.floor(vl / 16.66)}`;
             if(vl == 100) vk = "battery_android_frame_full";
             if(vl == 0) vk = "battery_android_alert"
