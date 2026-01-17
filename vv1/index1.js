@@ -594,4 +594,4 @@ Thanks!`
 }
 
 window.NeoPlayer = NeoPlayer;
-export NeoPlayer;
+export default NeoPlayer;
