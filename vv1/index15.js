@@ -74,6 +74,7 @@ class NeoPlayer {
       cancelButtonText: "Restart"
     }).then(async res => {
       if (res.isConfirmed) {
+        this.sub_settings = this.state.sub;
         this.subselect.selectedIndex = this.state.sub.selected;
         this.video.currentTime = this.state.time;
         await this.loadSub(this.state.subfile);
