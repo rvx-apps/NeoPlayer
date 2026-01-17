@@ -57,14 +57,18 @@ class NeoPlayer {
       this.bindEvents();
       this.bindVideoLoadingEvents();
       this.toggleControls(1);
+      this.bindOldSetup();
       this.askResume();
    });
   }
-
+  bindOldSetup(){
+     if (this.state.sub) { this.sub_settings = this.state.sub;this.setupSub();}
+     if (this.state.fillmode) this.video.classList.toggle("fill",this.state.fillmode);
+     this.setupSub();
+  }
      /* ---------- Resume ---------- */
   askResume() {
     if (!this.state.time) return;
-
     Swal.fire({
       title: "Resume playback?",
       text: `Continue from ${this.secFormat(this.state.time)} ?`,
@@ -74,12 +78,9 @@ class NeoPlayer {
       cancelButtonText: "Restart"
     }).then(async res => {
       if (res.isConfirmed) {
-        this.sub_settings = this.state.sub;
         this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
         this.video.currentTime = this.state.time;
-        await this.loadSub(this.state.subfile);
-        this.video.classList.toggle("fill", this.state.fillmode);    
-        this.setupSub();
+        await this.loadSub(this.state.subfile);    
         this.video.onload = () => this.video.play();
       }
     });
