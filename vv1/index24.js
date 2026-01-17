@@ -554,7 +554,7 @@ Thanks!`
             if(40 >= vl > 15) btl.style = "#ff9315";
             if(60 >= vl > 40 ) btl.style.color = "#ffffff";
             if(90 >= vl > 60) btl.style.color = "#c4ff6a";
-            if(vl > 90) btl.style.color = "#51ff2b";
+            if(vl > 90 || b.charging) btl.style.color = "#51ff2b";
           });
         } else {
           console.log("Battery API not supported");  
