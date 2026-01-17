@@ -5,7 +5,7 @@
 import {loadPlayerDeps}  from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loadlibs.js";
 import MenuController from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/menu.js";
 import {isFullscreen} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/fullscreenhelp.js";
-import {showloader, hideLoader} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loader.js";
+import {showLoader, hideLoader} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loader.js";
 import {parseSRT,parseVTT,parseSub} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/subtitles.js";
 import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
 
