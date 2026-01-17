@@ -375,15 +375,16 @@ Thanks!`
     this.video.load();
   }
   
-  async loadSub(url,txt = false) {
+  async loadSub(url,stxt = false) {
       if(!url) return;
-      if(txt){
+      if(stxt){
        this.subs = parseSub(url);
        this.sub_settings.on = true;
+       this.save();
        return;
       }
       this.subfile=url;
-      this.subTP = txt;
+      this.subTP = stxt;
       const txt = await fetch(url).then(r => r.text());
       //console.log(txt);
       if (url.endsWith(".srt")) this.subs = parseSub(txt);
