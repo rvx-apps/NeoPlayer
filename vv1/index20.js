@@ -341,6 +341,9 @@ Thanks!`
   setupSub(){
      this.subtext.style.color = this.sub_settings.color;
      this.subtext.style.fontSize = this.sub_settings.size;
+     this.subColor.value = this.sub_settings.color;
+     this.subSizeRange.value = this.sub_settings.size;
+     this.subSizeShow.textContent = this.sub_settings.size;
   }
   renderSubs (){
      this.subtitles.forEach((s,i)=>{
