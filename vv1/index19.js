@@ -78,7 +78,8 @@ class NeoPlayer {
         this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
         this.video.currentTime = this.state.time;
         await this.loadSub(this.state.subfile);
-        this.video.classList.toggle("fill", this.state.fillmode);      
+        this.video.classList.toggle("fill", this.state.fillmode);    
+        this.setupSub();
         this.video.onload = () => this.video.play();
       }
     });
@@ -337,6 +338,10 @@ Thanks!`
         console.log(sub.src);
     }
   }
+  setupSub(){
+     this.subtext.style.color = this.sub_settings.color;
+     this.subtext.style.fontSize = this.sub_settings.size;
+  }
   renderSubs (){
      this.subtitles.forEach((s,i)=>{
       let o=document.createElement("option");
@@ -344,6 +349,7 @@ Thanks!`
       this.subselect.appendChild(o);
     });
   }
+   
   toggleST(){
       console.log(this.statLayer.classList.contains("show"));
       if(this.statLayer.classList.contains("show")){
