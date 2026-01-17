@@ -8,6 +8,7 @@ import {isFullscreen} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/
 import {showLoader, hideLoader} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loader.js";
 import {parseSRT,parseVTT,parseSub} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/subtitles2.js";
 import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/timeformat.js";
+import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
 
 class NeoPlayer {
   constructor(container) {
@@ -235,7 +236,8 @@ class NeoPlayer {
     this.forward10Btn = this.maincontrols.querySelector(".forward10btn");
     this.feedbackBtn = this.optionsM.querySelector(".feedback");
     this.menu_s = new MenuController(this.container);
-     
+    this.keyboard = new NeoKeyboard(this);
+    this.keyboard.init();
     this.feedbackBtn.onclick = () => {
           this.openFeedbackEmail({
             
