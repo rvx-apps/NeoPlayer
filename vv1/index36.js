@@ -11,7 +11,7 @@ import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/Ne
 import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
 import { loadState, saveState } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/storage.js";
 import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/gDrive.3.js";
-import { getFbSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/fb.js";
+import { getFbSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/fb.2.js";
 
 class NeoPlayer {
   constructor(container) {
