@@ -234,7 +234,7 @@ class NeoPlayer {
     this.optionsitems = this.optionsM.querySelectorAll(".sheet-item");
     this.posterLayer = document.createElement("div");
     this.posterLayer.className = "thumb-warp";
-    this.posterLayer.innerHTML = `<img src="${this.poster}" alt="${this.title}">`;
+    this.posterLayer.innerHTML = `<img src="${this.poster}" alt="${this.title || 'Thumbnail'}">`;
     this.container.appendChild(this.posterLayer);
     this.controlshandlelayer = document.createElement("div");
     this.controlshandlelayer.className = "controlshandlelayer";
@@ -407,6 +407,11 @@ Thanks!`
   loadSource(source) {
     this.video.src = source.src;
     this.video.type = source.type;
+    if(this.poster){
+       this.posterLayer.classList.remove("hide");
+    }else{
+       this.posterLayer.classList.add("hide");
+    }
     this.video.load();
   }
   
