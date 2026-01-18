@@ -78,7 +78,7 @@ class NeoPlayer {
   }
 
   async loadfbfile(id){
-     this.gdEx = await getDriveSource(id);
+     this.gdEx = await getFbSource(id);
      console.log(JSON.stringify(this.gdEx));
      if(this.gdEx && this.gdEx!={}){
         this.sources = this.gdEx.source;
