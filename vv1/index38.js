@@ -44,7 +44,7 @@ class NeoPlayer {
     loadPlayerDeps({
       css: [
          "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded",
-         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.3.css",
+         "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.4.css",
          "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.3.css"
       ],
       js: [
