@@ -27,9 +27,9 @@ function normalizeFBVideoData(data) {
 }
 
 
-export async function getFbSource(url) {
+export async function getFbSource(fburl) {
   try {
-    const url = `https://fbex-ten.vercel.app/api/fb2?url=${url}`;
+    const url = `https://fbex-ten.vercel.app/api/fb2?url=${fburl}`;
 
     const res = await fetch(url, {
       headers: {
