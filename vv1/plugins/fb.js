@@ -27,14 +27,13 @@ function normalizeFBVideoData(data) {
 }
 
 
-export async function getFbSource(fileId) {
+export async function getFbSource(url) {
   try {
-    const url = `https://corsproxy.io/?https://drive.google.com/get_video_info?docid=${fileId}`;
+    const url = `https://fbex-ten.vercel.app/api/fb2?url=${url}`;
 
     const res = await fetch(url, {
       headers: {
-        accept: "*/*",
-        referer: "https://drive.google.com/"
+        accept: "*/*"
       }
     });
 
