@@ -2,7 +2,7 @@
    ....නමෝ බුද්ධාය!....
    Another Beautifull Advance Player From RvX Devs.......
 */
-import {loadPlayerDeps}  from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loadlibs.js";
+import {loadPlayerDeps}  from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loadlibs.2.js";
 import MenuController from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/menu.js";
 import {isFullscreen} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/fullscreenhelp.js";
 import {showLoader, hideLoader} from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/loader.js";
@@ -48,8 +48,8 @@ class NeoPlayer {
          "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/css/neo-player.media.3.css"
       ],
       js: [
-         "https://cdn.jsdelivr.net/npm/sweetalert2@11",
-         "https://cdn.jsdelivr.net/npm/hls.js@latest"
+       {src:"https://cdn.jsdelivr.net/npm/sweetalert2@11",head:true},
+       {src:"https://cdn.jsdelivr.net/npm/hls.js@latest",head:true}
       ]
    }).then(() => {
       console.log("Player dependencies ready");
@@ -425,7 +425,7 @@ Thanks!`
   const isM3U8 =
     source.type === "application/x-mpegURL" ||
     source.src.endsWith(".m3u8");
-
+  console.log(`isM3U8: ${isM3U8}`);
   if (isM3U8) {
     // Safari / iOS (native HLS)
     if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -433,6 +433,7 @@ Thanks!`
     }
     // Other browsers
     else if (window.Hls && Hls.isSupported()) {
+      console.log("Had 3rd party HLS Support!.So continuing with that....");
       this.hls = new Hls({
         enableWorker: true,
         lowLatencyMode: true
