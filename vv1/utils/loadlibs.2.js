@@ -12,18 +12,22 @@ function loadCSS(href) {
     document.head.appendChild(link);
   });
 }
-function loadJS(src) {
+function loadJS(j) {
   return new Promise((resolve, reject) => {
-    if ([...document.scripts].some(s => s.src.includes(src))) {
+    if ([...document.scripts].some(s => s.src.includes(j.src))) {
       return resolve("js-already-loaded");
     }
 
     const script = document.createElement("script");
-    script.src = src;
+    script.src = j.src;
     script.defer = true;
     script.onload = () => resolve("js-loaded");
     script.onerror = reject;
-    document.body.appendChild(script);
+    if(j.head){
+      document.head.appendChild(script);
+    }else{
+      document.body.appendChild(script);
+    }
   });
 }
 async function loadPlayerDeps({ css = [], js = [] }) {
