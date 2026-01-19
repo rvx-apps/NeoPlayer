@@ -404,7 +404,7 @@ Thanks!`
       }
   }
 
-  loadSource(source) {
+  loadSourceOld(source) {
     this.video.src = source.src;
     this.video.type = source.type;
     if(this.poster){
@@ -413,6 +413,51 @@ Thanks!`
        this.posterLayer.classList.add("hide");
     }
     this.video.load();
+  }
+
+  loadSource(source) {
+  // Cleanup old HLS instance
+  if (this.hls) {
+    this.hls.destroy();
+    this.hls = null;
+  }
+
+  const isM3U8 =
+    source.type === "application/x-mpegURL" ||
+    source.src.endsWith(".m3u8");
+
+  if (isM3U8) {
+    // Safari / iOS (native HLS)
+    if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
+      this.video.src = source.src;
+    }
+    // Other browsers
+    else if (window.Hls && Hls.isSupported()) {
+      this.hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true
+      });
+
+      this.hls.loadSource(source.src);
+      this.hls.attachMedia(this.video);
+    } else {
+      console.error("HLS not supported in this browser");
+      return;
+    }
+  } else {
+    // Normal MP4 / WebM
+    this.video.src = source.src;
+    this.video.type = source.type;
+  }
+
+  // Poster handling
+  if (this.poster) {
+    this.posterLayer.classList.remove("hide");
+  } else {
+    this.posterLayer.classList.add("hide");
+  }
+
+  this.video.load();
   }
   
   async loadSub(url,stxt = false) {
