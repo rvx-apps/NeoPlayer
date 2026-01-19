@@ -438,9 +438,10 @@ Thanks!`
         enableWorker: true,
         lowLatencyMode: true
       });
-
-      this.hls.loadSource(source.src);
       this.hls.attachMedia(this.video);
+      this.hls.on(Hls.Events.MEDIA_ATTACHED,()=>{
+        this.hls.loadSource(source.src);
+      });
     } else {
       console.error("HLS not supported in this browser");
       return;
