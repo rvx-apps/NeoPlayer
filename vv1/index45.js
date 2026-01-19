@@ -102,7 +102,7 @@ class NeoPlayer {
 
   async loadExternalSub(subObj){
      this.subtitles = subObj;
-     this.setupSubFiles();
+     this.setupSubFiles(true);
      
      this.sub_settings.on = true;
      var sub = subObj.find(ss=>ss.default)
@@ -112,8 +112,8 @@ class NeoPlayer {
      console.log(subObj.src);
   }
 
-  setupSubFiles(){
-     this.subselect.innerHTML = "";
+  setupSubFiles(external = false){
+     if(external) this.subselect.innerHTML = "";
      this.subtitles.forEach((s,i)=>{
       let o=document.createElement("option");
       o.value=i;o.text=s.label;
