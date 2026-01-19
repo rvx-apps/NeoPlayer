@@ -99,6 +99,27 @@ class NeoPlayer {
       this.quality.appendChild(o);
     });
   }
+
+  async loadExternalSub(subObj){
+     this.subtitles = subObj;
+     this.setupSubFiles();
+     
+     this.sub_settings.on = true;
+     var sub = subObj.find(ss=>ss.defalt)
+     this.subselect.value = subObj.indexOf(ss);
+     this.sub_settings.selected = sub || this.subtitles[this.subselect.value];
+     await this.loadSub(subObj.src,subObj.txt)
+     console.log(subObj.src);
+  }
+
+  setupSubFiles(){
+     this.subselect.innerHTML = "";
+     this.subtitles.forEach((s,i)=>{
+      let o=document.createElement("option");
+      o.value=i;o.text=s.label;
+      this.subselect.appendChild(o);
+    });
+  }
    
   bindOldSetup(){
      if (this.state.sub) { this.sub_settings = this.state.sub;this.setupSub();}
@@ -339,7 +360,8 @@ Thanks!`
         this.subSizeRange.value = this.sub_settings.size;
         this.subSizeShow.textContent = this.sub_settings.size;
         this.subColor.value = this.sub_settings.color;
-        this.sub_settings ={on:false,color:"#ffffff",size:"18px"};
+        this.sub_settings.color= "#ffffff";
+        this.sub_settings.size:"18px";
     }
     this.subSizeRange.oninput = (e) => {
         var v = e.target.value;
@@ -355,11 +377,7 @@ Thanks!`
 
     this.setupQs();
 
-    this.subtitles.forEach((s,i)=>{
-      let o=document.createElement("option");
-      o.value=i;o.text=s.label;
-      this.subselect.appendChild(o);
-    });
+    this.setupSubFiles();
     
     this.subselect.onchange = async (e) => {
         var v = e.target.value;
@@ -641,14 +659,14 @@ Thanks!`
        if ("getBattery" in navigator) {
           navigator.getBattery().then(b => {
             //console.log(b.level * 100 + "%");
-            btlv.textContent = b.level*100;
-            var vl = Math.floor(b.level *100);
+            var vl = Math.floor(b.level * 100);
+            btlv.textContent = vl;
             var vk = `battery_android_frame_${Math.floor(vl / 16.66)}`;
             if(vl == 100) vk = "battery_android_frame_full";
-            if(vl <= 15) vk = "battery_android_alert"
+            if(vl <= 16.66) vk = "battery_android_alert"
             btl.textContent=`${vk}`;
-            if(vl <= 15) btl.style.color = "#ff0a00";
-            if(40 >= vl > 15) btl.style = "#ff9315";
+            if(vl <= 16.66) btl.style.color = "#ff0a00";
+            if(40 >= vl > 16.66) btl.style = "#ff9315";
             if(60 >= vl > 40 ) btl.style.color = "#ffffff";
             if(90 >= vl > 60) btl.style.color = "#c4ff6a";
             if(vl > 90 || b.charging) btl.style.color = "#51ff2b";
