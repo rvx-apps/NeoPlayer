@@ -108,7 +108,7 @@ class NeoPlayer {
      var sub = subObj.find(ss=>ss.default)
      this.subselect.value = subObj.indexOf(sub);
      this.sub_settings.selected = this.subselect.value;
-     await this.loadSub(sub.src,subObj.txt)
+     await this.loadSub(sub.src,sub.txt)
      console.log(sub.src);
   }
 
