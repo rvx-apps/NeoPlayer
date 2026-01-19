@@ -361,7 +361,7 @@ Thanks!`
         this.subSizeShow.textContent = this.sub_settings.size;
         this.subColor.value = this.sub_settings.color;
         this.sub_settings.color= "#ffffff";
-        this.sub_settings.size:"18px";
+        this.sub_settings.size="18px";
     }
     this.subSizeRange.oninput = (e) => {
         var v = e.target.value;
