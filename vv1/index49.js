@@ -113,7 +113,7 @@ class NeoPlayer {
   }
 
   setupSubFiles(external = false){
-     if(external) this.subselect.innerHTML = "";
+     if(external) this.subselect.innerHTML = `<option value="null">CC</option>`;
      this.subtitles.forEach((s,i)=>{
       let o=document.createElement("option");
       o.value=i;o.text=s.label;
@@ -382,7 +382,7 @@ Thanks!`
     this.subselect.onchange = async (e) => {
         var v = e.target.value;
         console.log("sub select value "+v);
-        if (v == "") {
+        if (v == "" || v == null) {
             this.subs = [];
             this.sub_settings.on = false;
             this.sub_settings.selected = null;
@@ -393,7 +393,7 @@ Thanks!`
         var sub = this.subtitles[v];
         this.sub_settings.selected = v;
         this.subfile = sub.src;
-        await this.loadSub(sub.src);
+        await this.loadSub(sub.src,(sub.txt || false));
         console.log(sub.src);
     }
   }
