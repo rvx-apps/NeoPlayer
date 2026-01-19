@@ -428,11 +428,11 @@ Thanks!`
   console.log(`isM3U8: ${isM3U8}`);
   if (isM3U8) {
     // Safari / iOS (native HLS)
-    if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
+    /*if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
       this.video.src = source.src;
-    }
+    }*/
     // Other browsers
-    else if (window.Hls && Hls.isSupported()) {
+    /*else*/ if (window.Hls && Hls.isSupported()) {
       console.log("Had 3rd party HLS Support!.So continuing with that....");
       this.hls = new Hls({
         enableWorker: true,
