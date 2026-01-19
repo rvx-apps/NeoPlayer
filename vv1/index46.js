@@ -381,6 +381,7 @@ Thanks!`
     
     this.subselect.onchange = async (e) => {
         var v = e.target.value;
+        console.log("sub select value "+v);
         if (v == "") {
             this.subs = [];
             this.sub_settings.on = false;
