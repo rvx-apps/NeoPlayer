@@ -107,9 +107,9 @@ class NeoPlayer {
      this.sub_settings.on = true;
      var sub = subObj.find(ss=>ss.default)
      this.subselect.value = subObj.indexOf(sub);
-     this.sub_settings.selected = sub || this.subtitles[this.subselect.value];
-     await this.loadSub(subObj.src,subObj.txt)
-     console.log(subObj.src);
+     this.sub_settings.selected = this.subselect.value;
+     await this.loadSub(sub.src,subObj.txt)
+     console.log(sub.src);
   }
 
   setupSubFiles(external = false){
@@ -391,7 +391,8 @@ Thanks!`
         //console.log(v);
         this.sub_settings.on = true;
         var sub = this.subtitles[v];
-        this.sub_settings.selected = sub;
+        this.sub_settings.selected = v;
+        this.subfile = sub.src;
         await this.loadSub(sub.src);
         console.log(sub.src);
     }
