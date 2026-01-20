@@ -698,7 +698,11 @@ Thanks!`
         for (const s of active) {
           const line = document.createElement("div");
           line.className = "subtitle-line";
-          line.textContent = s.text;
+          if(s.text.includes("<") && s.text.includes("</") && s.text.includes(">")){
+             line.innerHTML = s.text;
+          }else{
+             line.textContent = s.text;
+          }
           this.subtext.appendChild(line);
         }
         
