@@ -705,7 +705,7 @@ Thanks!`
           const line = document.createElement("div");
           line.className = "subtitle-line";
           if(s.text.includes("<") && s.text.includes("</") && s.text.includes(">")){
-             line.innerHTML = s.text;
+             line.innerHTML = s.text.replace(/\n/g,"<br>");
           }else{
              line.textContent = s.text;
           }
