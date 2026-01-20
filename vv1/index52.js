@@ -92,7 +92,7 @@ class NeoPlayer {
    
   setupQs(){
    this.quality.innerHTML ="";
-   this.posterLayer.querySelector("img").src = this.poster;     
+   this.posterImg.src = this.poster;     
    this.sources.forEach((s,i)=>{
       let o=document.createElement("option");
       o.value=i;o.text=s.label;
@@ -256,6 +256,7 @@ class NeoPlayer {
     this.posterLayer = document.createElement("div");
     this.posterLayer.className = "thumb-warp";
     this.posterLayer.innerHTML = `<img src="${this.poster}" alt="${this.title || 'Thumbnail'}">`;
+    this.posterImg = this.posterLayer.querySelector("img");
     this.container.appendChild(this.posterLayer);
     this.controlshandlelayer = document.createElement("div");
     this.controlshandlelayer.className = "controlshandlelayer";
@@ -424,6 +425,8 @@ Thanks!`
       }
   }
 
+   
+
   loadSourceOld(source) {
     this.video.src = source.src;
     this.video.type = source.type;
@@ -435,6 +438,9 @@ Thanks!`
     this.video.load();
   }
 
+  showPoster = () => this.posterLayer.classList.remove("hide");
+  hidePoster = () => this.posterLayer.classList.add("hide");
+   
   loadSource(source) {
   // Cleanup old HLS instance
   if (this.hls) {
@@ -474,9 +480,9 @@ Thanks!`
 
   // Poster handling
   if (this.poster) {
-    this.posterLayer.classList.remove("hide");
+    this.showPoster();
   } else {
-    this.posterLayer.classList.add("hide");
+    this.hidePoster();
   }
 
   this.video.load();
@@ -709,11 +715,17 @@ Thanks!`
         
     };
 
-    this.seek.oninput = () =>
-      this.video.currentTime = ( this.seek.value / 100 ) * this.video.duration;
+    this.seek.oninput = () => {
+      var seekT = ( this.seek.value / 100 ) * this.video.duration;
+      this.time.textContent =
+        this.secFormat(seekT) + " / " +
+        this.secFormat(this.video.duration);
+      this.video.currentTime = seekT;
+    }
 
+    this.posterImg.onerror = () => hidePoster();
+    this.posterImg.onload = () => showPoster();
     //this.speed.onchange = () => this.video.playbackRate = this.speed.value;
-
     this.quality.onchange = () => {
       let t=this.video.currentTime;
       this.loadSource(this.sources[this.quality.value]);
