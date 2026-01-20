@@ -723,8 +723,8 @@ Thanks!`
       this.video.currentTime = seekT;
     }
 
-    this.posterImg.onerror = () => hidePoster();
-    this.posterImg.onload = () => showPoster();
+    this.posterImg.onerror = () => this.hidePoster();
+    this.posterImg.onload = () => this.showPoster();
     //this.speed.onchange = () => this.video.playbackRate = this.speed.value;
     this.quality.onchange = () => {
       let t=this.video.currentTime;
