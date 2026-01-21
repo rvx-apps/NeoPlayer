@@ -64,6 +64,9 @@ class NeoPlayer {
       this.askResume();
    });
   }
+  setPoster (src){
+     this.poster = src;
+  }
   async loaddrivefile(id){
      this.gdEx = await getDriveSource(id);
      console.log(JSON.stringify(this.gdEx));
