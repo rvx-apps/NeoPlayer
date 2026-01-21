@@ -17,6 +17,7 @@ class NeoPlayer {
   constructor(container) {
     this.version = "1.0";
     this.container = container;
+    if(!this.container.classList.contains("neo-player")) this.container.classList.add("neo-player");
     this.video = document.createElement("video");
     this.container.appendChild(this.video);
     this.sources = JSON.parse(container.dataset.sources || "[]");
