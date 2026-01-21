@@ -56,7 +56,7 @@ class NeoPlayer {
       //initVideoPlayer(); // your init function
       //console.log(JSON.stringify(this.skipranges));
       this.buildUI();
-      if(this.container.dataset && this.source.length > 0) this.loadSource(this.sources[0]);
+      if(this.container.dataset && this.sources && this.sources?.length > 0) this.loadSource(this.sources[0]);
       this.bindEvents();
       this.bindVideoLoadingEvents();
       this.toggleControls(1);
