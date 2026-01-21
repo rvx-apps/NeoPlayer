@@ -452,7 +452,7 @@ Thanks!`
   }
 
   const isM3U8 =
-    source.type === "application/x-mpegURL" ||
+    source?.type === "application/x-mpegURL" ||
     source.src.endsWith(".m3u8");
   console.log(`isM3U8: ${isM3U8}`);
   if (isM3U8) {
