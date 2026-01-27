@@ -68,6 +68,30 @@ class NeoPlayer {
   setPoster (src){
      this.poster = src;
   }
+
+  async trywithHls(){
+     var csrc = this.video.src;
+     if (his.hls) {
+      this.hls.destroy();
+      this.hls = null;
+    }
+
+    if(window.Hls && Hls.isSupported()) {
+      console.log("Had 3rd party HLS Supporcontinuinginuing with that....");
+      this.hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true
+      });
+      this.hls.attachMedia(this.video);
+      this.hls.on(Hls.Events.MEDIA_ATTACHED,()=>{
+        this.hls.loadSource(csrc);
+      });
+    } else {
+      console.error("HLS not supported in this browser");
+      return;
+      }
+   }
+   
   async loaddrivefile(id){
      this.gdEx = await getDriveSource(id);
      console.log(JSON.stringify(this.gdEx));
@@ -76,6 +100,7 @@ class NeoPlayer {
         this.poster = this.gdEx.thumb || null;
         this.loadSource(this.gdEx.source[0]);
         this.setupQs();
+        this.video.onerror=()=>this.trywithHls();
      }else{
         console.log("fetchErr");
      }
@@ -462,8 +487,9 @@ Thanks!`
       this.video.src = source.src;
     }*/
     // Other browsers
-    /*else*/ if (window.Hls && Hls.isSupported()) {
-      console.log("Had 3rd party HLS Support!.So continuing with that....");
+    /*else*/ 
+   if(window.Hls && Hls.isSupported()) {
+      console.log("Had 3rd party HLS Supporcontinuinginuing with that....");
       this.hls = new Hls({
         enableWorker: true,
         lowLatencyMode: true
