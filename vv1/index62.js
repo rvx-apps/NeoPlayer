@@ -14,9 +14,10 @@ import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@m
 import { getFbSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/fb.2.js";
 
 class NeoPlayer {
-  constructor(container) {
+  constructor(container, options ={}){
     this.version = "1.0";
     this.container = container;
+    this.cop = options;
     if(!this.container.classList.contains("neo-player")) this.container.classList.add("neo-player");
     this.video = document.createElement("video");
     this.container.appendChild(this.video);
@@ -168,6 +169,7 @@ class NeoPlayer {
     }).then(async res => {
       if (res.isConfirmed) {
         this.video.currentTime = this.state.time;
+        if(this.cop.onResume) this.cop.onResume();
         if(this.state.sub.on){
           this.subselect.selectedIndex = Number(this.state.sub.selected)+1;
           await this.loadSub(this.state.subfile);    
