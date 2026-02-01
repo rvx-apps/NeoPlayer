@@ -45,7 +45,7 @@ function detectVideoType(url, itag) {
 export async function getDriveSource(fileId) {
   try {
     //const url = `https://corsproxy.io/?https://drive.google.com/get_video_info?docid=${fileId}`;
-    const url = `https://corsproxy.io/?https://drive.google.com/u/0/get_video_info?docid=${fileId}&drive_originator_app=303&auditContext=forDisplay`;
+    const url = `https://fbex-ten.vercel.app/api/fetch?url=https://drive.google.com/u/0/get_video_info?docid=${fileId}&drive_originator_app=303&auditContext=forDisplay`;
     const res = await fetch(url, {
       headers: {
         accept: "*/*",
