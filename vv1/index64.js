@@ -95,7 +95,7 @@ class NeoPlayer {
    
   async loaddrivefile(id){
      this.gdEx = await getDriveSource(id);
-     console.log(JSON.stringify(this.gdEx));
+     //console.log(JSON.stringify(this.gdEx));
      if(this.gdEx && this.gdEx!={}){
         this.sources = this.gdEx.source;
         this.poster = this.gdEx.thumb || null;
@@ -109,7 +109,7 @@ class NeoPlayer {
 
   async loadfbfile(id){
      this.gdEx = await getFbSource(id);
-     console.log(JSON.stringify(this.gdEx));
+     //console.log(JSON.stringify(this.gdEx));
      if(this.gdEx && this.gdEx!={}){
         this.sources = this.gdEx.source;
         this.poster = this.gdEx.thumb || null;
@@ -139,7 +139,7 @@ class NeoPlayer {
      this.subselect.value = subObj.indexOf(sub);
      this.sub_settings.selected = this.subselect.value;
      await this.loadSub(sub.src,sub.txt)
-     console.log(sub.src);
+     //console.log(sub.src);
   }
 
   setupSubFiles(external = false){
@@ -426,7 +426,7 @@ Thanks!`
         this.sub_settings.selected = v;
         this.subfile = sub.src;
         await this.loadSub(sub.src,(sub.txt || false));
-        console.log(sub.src);
+        //console.log(sub.src);
     }
   }
   setupSub(){
@@ -445,7 +445,7 @@ Thanks!`
   }
    
   toggleST(){
-      console.log(this.statLayer.classList.contains("show"));
+      //console.log(this.statLayer.classList.contains("show"));
       if(this.statLayer.classList.contains("show")){
           this.statLayer.classList.remove("show");
           this.statbtn.querySelector(".tgl").textContent = "toggle_on";
