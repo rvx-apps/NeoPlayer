@@ -239,7 +239,7 @@ class NeoPlayer {
       </div>
       
       <div class="sheet-footer">
-          💙 Neo Player : Player By RvX™ ❤️<br><br><span>•Github | Email</span>
+          💙 Neo Player : Player By RvX™ ❤️<br><br><span>Github | Email</span>
       </div>
       
       <div class="subM speedSection" data-menu="speedSection">
@@ -491,7 +491,7 @@ Thanks!`
     // Other browsers
     /*else*/ 
    if(window.Hls && Hls.isSupported()) {
-      console.log("Had 3rd party HLS Supporcontinuinginuing with that....");
+      console.log("Had 3rd party HLS Support continuing with that....");
       this.hls = new Hls({
         enableWorker: true,
         lowLatencyMode: true
