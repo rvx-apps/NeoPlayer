@@ -118,8 +118,9 @@ class NeoPlayer {
 
   async loadfbfile(id){
      this.gdEx = await getFbSource(id);
-     //console.log(JSON.stringify(this.gdEx));
+     console.log(JSON.stringify(this.gdEx,null,2));
      if(this.gdEx && this.gdEx!={}){
+        //console.log(JSON.stringify(this.gdEx,null,2));
         this.sources = this.gdEx.source;
         this.poster = this.gdEx.thumb || null;
         this.loadSource(this.gdEx.source[0]);
