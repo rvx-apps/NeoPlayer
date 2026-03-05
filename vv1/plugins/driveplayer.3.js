@@ -4,7 +4,9 @@ static async attach(video, url, options = {}) {
 
     console.log("[RvXDrivePlayer] Attaching player...");
     console.log("[RvXDrivePlayer] URL:", `${url}`);
+    console.log(JSON.stringify(url));
     console.log("[RvXDrivePlayer] Options:", `${options}`);
+    console.log(JSON.stringify(options));
 
     const player = {};
     player.onerror = null;
