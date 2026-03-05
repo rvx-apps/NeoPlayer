@@ -11,6 +11,7 @@ import {timeStringToMs, toSeconds} from "https://cdn.jsdelivr.net/gh/rvx-apps/Ne
 import NeoKeyboard from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/keyboard.js";
 import { loadState, saveState } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/utils/storage.js";
 import { getDriveSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/gDrive.5.js";
+import { RvXDrivePlayer } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/driveplayer.js";
 import { getFbSource } from "https://cdn.jsdelivr.net/gh/rvx-apps/NeoPlayer@main/vv1/plugins/fb.3.js";
 
 class NeoPlayer {
@@ -101,7 +102,10 @@ class NeoPlayer {
         this.poster = this.gdEx.thumb || null;
         this.loadSource(this.gdEx.source[0]);
         this.setupQs();
-        this.video.onerror=()=>this.trywithHls();
+        this.video.onerror=()=>{
+           this.drpl= RvXDrivePlayer.attach(this.video,this.gdEx.source[0]);
+           this.drpl.onerror=()=>this.trywithHls();
+        }
      }else{
         console.log("fetchErr");
      }
