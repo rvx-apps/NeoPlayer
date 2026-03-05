@@ -2,8 +2,11 @@ export class RvXDrivePlayer {
 
 static async attach(video, url, options={}) {
 
-    const chunkSize = options.chunkSize || 1024*1024*2; // 2MB
-    const bufferAhead = options.bufferAhead || 20; // seconds
+    const player = {}; // returned object
+    player.onerror = null;
+
+    const chunkSize = options.chunkSize || 1024*1024*2;
+    const bufferAhead = options.bufferAhead || 20;
 
     const mediaSource = new MediaSource();
     video.src = URL.createObjectURL(mediaSource);
@@ -11,9 +14,15 @@ static async attach(video, url, options={}) {
     let fileSize = 0;
     let mime = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
 
-    // --- get file size ---
-    const head = await fetch(url, {method:'HEAD'});
-    fileSize = Number(head.headers.get('content-length'));
+    try {
+
+        const head = await fetch(url,{method:'HEAD'});
+        fileSize = Number(head.headers.get('content-length'));
+
+    } catch(e) {
+        if(player.onerror) player.onerror(e);
+        return player;
+    }
 
     mediaSource.addEventListener('sourceopen', async ()=>{
 
@@ -22,35 +31,42 @@ static async attach(video, url, options={}) {
         let nextByte = 0;
         let fetching = false;
 
-        async function fetchChunk(start) {
+        async function fetchChunk(start){
+
             if(fetching) return;
             if(start >= fileSize) return;
 
             fetching = true;
 
-            const end = Math.min(start + chunkSize - 1, fileSize-1);
+            try {
 
-            const res = await fetch(url, {
-                headers:{ "Range":`bytes=${start}-${end}` }
-            });
+                const end = Math.min(start+chunkSize-1,fileSize-1);
 
-            const data = await res.arrayBuffer();
+                const res = await fetch(url,{
+                    headers:{ "Range":`bytes=${start}-${end}` }
+                });
 
-            await new Promise(r=>{
-                sb.addEventListener("updateend", r, {once:true});
-                sb.appendBuffer(data);
-            });
+                const data = await res.arrayBuffer();
 
-            nextByte = end+1;
-            fetching = false;
+                await new Promise(r=>{
+                    sb.addEventListener("updateend",r,{once:true});
+                    sb.appendBuffer(data);
+                });
+
+                nextByte = end+1;
+
+            } catch(e) {
+                if(player.onerror) player.onerror(e);
+            }
+
+            fetching=false;
         }
 
-        // initial buffer
         await fetchChunk(0);
         await fetchChunk(nextByte);
 
-        // --- buffer loop ---
         setInterval(()=>{
+
             if(!video.duration || video.readyState<2) return;
 
             const buffered = video.buffered.length ?
@@ -62,14 +78,17 @@ static async attach(video, url, options={}) {
 
         },500);
 
-        // --- seeking ---
-        video.addEventListener("seeking", ()=>{
+        video.addEventListener("seeking",()=>{
+
             const byte = Math.floor(fileSize*(video.currentTime/video.duration));
-            nextByte = byte - (byte%chunkSize);
+            nextByte = byte-(byte%chunkSize);
             fetchChunk(nextByte);
+
         });
 
     });
+
+    return player;
 }
 }
 
