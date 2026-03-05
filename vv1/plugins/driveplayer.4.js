@@ -3,17 +3,26 @@ export class RvXDrivePlayer {
 static async attach(video, url, options = {}) {
 
     console.log("[RvXDrivePlayer] Attaching player...");
-    console.log("[RvXDrivePlayer] URL:", `${url}`);
-    console.log(JSON.stringify(url));
-    console.log("[RvXDrivePlayer] Options:", `${options}`);
-    console.log(JSON.stringify(options));
-
+    console.log("[RvXDrivePlayer] URL:", JSON.stringify(url,null,2));
+    //console.log(JSON.stringify(url));
+    console.log("[RvXDrivePlayer] Options:", JSON.stringify(options,null,2));
+    //console.log(JSON.stringify(options));
+    if (typeof url == "object"){
+        url = url.url||url.src||url.video||null;
+    }
+    
     const player = {};
     player.onerror = null;
     player.onready = null;
     player.onattach = null;
     player.onchunk = null;
 
+    if(url == null){
+        player.onerror("Sorry cannot find media url");
+        console.log("[RvXDrivePlayer] Error: sorry cannot find media url!");
+        return;
+    }
+    
     const chunkSize = options.chunkSize || 1024 * 1024 * 2;
     const bufferAhead = options.bufferAhead || 20;
 
