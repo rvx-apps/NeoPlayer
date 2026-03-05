@@ -98,6 +98,7 @@ class NeoPlayer {
      this.gdEx = await getDriveSource(id);
      //console.log(JSON.stringify(this.gdEx));
      if(this.gdEx && this.gdEx!={}){
+        console.log(JSON.stringify(this.gdEx));
         this.sources = this.gdEx.source;
         this.poster = this.gdEx.thumb || null;
         this.loadSource(this.gdEx.source[0]);
