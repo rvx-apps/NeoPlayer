@@ -3,8 +3,8 @@ export class RvXDrivePlayer {
 static async attach(video, url, options = {}) {
 
     console.log("[RvXDrivePlayer] Attaching player...");
-    console.log("[RvXDrivePlayer] URL:", url);
-    console.log("[RvXDrivePlayer] Options:", options);
+    console.log("[RvXDrivePlayer] URL:", `${url}`);
+    console.log("[RvXDrivePlayer] Options:", `${options}`);
 
     const player = {};
     player.onerror = null;
@@ -91,7 +91,7 @@ static async attach(video, url, options = {}) {
 
             } catch (e) {
 
-                console.error("[RvXDrivePlayer] Chunk error:", e);
+                console.error("[RvXDrivePlayer] Chunk error:", `${e}`);
 
                 if (player.onerror) player.onerror(e);
             }
